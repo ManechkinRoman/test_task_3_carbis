@@ -3,9 +3,6 @@ import os
 from pprint import pprint
 
 token = os.getenv("MY_DADATA_API")
-
-print(token)
-
 dadata = Dadata(token)
 
 result = dadata.suggest(name="address", query="Новосибирск Новогодняя 12")
