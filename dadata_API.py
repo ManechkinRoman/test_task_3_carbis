@@ -5,7 +5,7 @@ from pprint import pprint
 token = os.getenv("MY_DADATA_API")
 dadata = Dadata(token)
 
-result = dadata.suggest(name="address", query="Новосибирск Новогодняя 12")
+result = dadata.suggest(name="address", query="Новосибирск Новогодняя 12", count=15)
 
 #pprint(result)
 

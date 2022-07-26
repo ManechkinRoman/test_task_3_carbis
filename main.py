@@ -13,10 +13,10 @@ HELP_MESSAGE = f"Help для программы получения точных 
                f"4.\tДля получения справки пишите на электронный адрес: romanmanechkin@yandex.ru\n"
 
 
-def get_correct_addresses(addr):
+def get_correct_addresses(addr, count = 7):
     """Функция возвращает список корректных адресов"""
     global dadata
-    query_result = dadata.suggest(name="address", query="Новосибирск Новогодняя 12")
+    query_result = dadata.suggest(name="address", query=addr, count=count)
 
     result = []
     for line in query_result:
@@ -27,7 +27,6 @@ def get_correct_addresses(addr):
 def main():
     global dadata
     result = None
-    dadata = None
 
     std_input = sys.stdin  # модуль потока входных данных
     std_out = sys.stdout  # модуль потока выходных данных
@@ -65,6 +64,15 @@ def main():
 
         elif line.strip().isdigit() and result:
             std_out.write(f"Вывод точных координат запроса № {line.strip()}\n")
+            address = result[int(line.strip())]
+
+            correct_address_obj = dadata.suggest(name="address", query=address, count=1)
+            lat = correct_address_obj[0]["data"]["geo_lat"]
+            lon = correct_address_obj[0]["data"]["geo_lon"]
+
+            std_out.write(f"Координаты выбранного объекта: {lat}, {lon}\n")
+            result = None
+
         else:
             std_out.write(f"Введено некорректное сообщение.\n")
 
