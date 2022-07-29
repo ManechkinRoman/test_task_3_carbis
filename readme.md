@@ -5,7 +5,7 @@
 ## Зависимости:
 
 -   Python 3.7+
--   [httpx](https://pypi.org/project/httpx/)
+-   [DaData](https://github.com/hflabs/dadata-py)
 
 ## Установка
 
@@ -24,7 +24,7 @@ pip install -r requirements.txt
 python3 main.py
 ```
 
-Программа имеет следующий функционал:
+### Программа имеет следующий функционал:
 
 Получение справки о программе
 ```
