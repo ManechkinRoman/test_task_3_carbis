@@ -4,12 +4,12 @@ from dadata import Dadata  # модуль для работы с Dadata API
 import os  # модуль для получения переменных окружения
 
 HELP_MESSAGE = f"Help для программы получения точных координат объекта по адресу.\n" \
-               f"1.\tЧтобы получить координаты объекта введите: 'get cords <адрес объекта>'.\n" \
+               f"1.\tЧтобы получить координаты объекта введите: 'get coords <адрес объекта>'.\n" \
                f"\tДалее вам будет предложено выбрать уточненный адрес объекта, введите цифру в указанном диапазоне.\n" \
                f"\tПосле этого вы получите точные координаты адреса объекта.\n" \
                f"2.\tДля получения помощи введите команду help.\n" \
                f"3.\tДля выхода из программы введите команду exit.\n" \
-               f"4.\tДля получения справки пишите на электронный адрес: romanmanechkin@yandex.ru\n"
+               f"4.\tДля получения справки пишите на электронный адрес: romanmanechkin@yandex.ru.\n"
 
 
 def get_correct_addresses(addr, count=7):
@@ -45,13 +45,13 @@ def main():
     # Выведем приветственное сообщение
     std_out.write(f"Вы запустили программу для получения точных координат объекта по адресу.\n"
                   f"Для получения справки напишите help.\n"
-                  f"Для выхода из программы напишите exit\n")
+                  f"Для выхода из программы напишите exit.\n")
 
     # Получим API из переменных окружения и создадим объект dadata
     try:
         token = os.getenv("MY_DADATA_API")
         dadata = Dadata(token)
-        std_out.write("Получен API_token для Dadata.\n")
+        # std_out.write("Получен API_token для Dadata.\n")
     except Exception as error:
         # В случае ошибки выходим из программы
         std_out.write(f"Не получилось получить токен для Dadata. \n Ошибка: \n {error}\n")
@@ -69,14 +69,14 @@ def main():
             std_out.write(HELP_MESSAGE)
 
         # получение координат
-        elif "get cords" in line.strip():
-            address = line.strip()[10:]   # получим адрес из сообщения пользователя
+        elif "get coords" in line.strip() and len(line.strip()[11:]) > 5:
+            address = line.strip()[11:]   # получим адрес из сообщения пользователя
             result = get_correct_addresses(address) # получим результат запроса к dadata по адресу пользователя
             std_out.write("Выберите уточненный вариант адреса:\n")
             # Вывод уточненных адресов
             for indx, adr in enumerate(result):
                 std_out.write(f"[{indx}]\t {adr}\n")
-            std_out.write(f"Введите цифру от 0 до {len(result)}:\n")
+            std_out.write(f"Введите цифру от 0 до {len(result)-1}:\n")
 
         # Если пользователь ввел цифру и до этого был произведен запрос с уточнением адресов, то получим координаты
         # уточненного адреса
